@@ -29,24 +29,23 @@ class VarnishContainerPluginRemote(RemoteBasePlugin):
 		# Check socket
 		# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		# s.settimeout(1)
-		cmd = "docker exec -it " + self.containerId + "  varnishstat -j > out.json"
-		os.system(cmd)
-		
 		try:
-			s.connect((self.address, self.port))
-			device.state_metric(key='state', value='OK')
-			logger.info("Connection to %s:%d OK." % (self.address, self.port))
-			s.shutdown(socket.SHUT_RDWR)
+			cmd = "docker exec -it " + self.containerId + "  varnishstat -j > out.json"
+			os.system(cmd)
+			with open('out.json') as f:
+    			data = json.load(f)
+				device.state_metric(key="cachehit",value=data["MAIN.cache_hit"]["value"])
+			# s.connect((self.address, self.port))
+			# device.state_metric(key='state', value='OK')
+			# logger.info("Connection to %s:%d OK." % (self.address, self.port))
+			# s.shutdown(socket.SHUT_RDWR)
 
 		except Exception as e:
-			device.state_metric(key='state', value='ERROR')
-			device.report_availability_event(title="%s unavailable" % (self.device_display_name),
-											 description="Couldn't connect to %s:%d: %s." % (self.address, self.port, e),
-											 properties={"current_timeout": "1s"})
-			logger.info("Couldn't connect to %s:%d: %s." % (self.address, self.port, e))
+			device.state_metric(key='cachehit', value=0)
+			# device.report_availability_event(title="%s unavailable" % (self.device_display_name),
+			# 								 description="Couldn't connect to %s:%d: %s." % (self.address, self.port, e),
+			# 								 properties={"current_timeout": "1s"})
+			# logger.info("Couldn't connect to %s:%d: %s." % (self.address, self.port, e))
 
 		finally:
-			s.close()
-
-
-VarnishContainerPluginRemote.query()
+			# s.close()

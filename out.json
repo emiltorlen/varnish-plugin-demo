@@ -1,0 +1,7 @@
+{
+    "MAIN.cache_hit": {
+    "description": "Cache hits",
+    "flag": "c", "format": "i",
+    "value": 163
+  }
+}

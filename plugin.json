@@ -16,7 +16,7 @@
         "displayName": "Varnish container cache stats",
         "properties": [
         {
-            "key": "containerId",
+            "key": "containerid",
             "displayName": "Container Id",
             "displayHint": "something like: d415271fad95"
         }
@@ -24,40 +24,36 @@
     },
     "properties": [
     {
-        "key": "containerId",
+        "key": "containerid",
         "type": "String",
         "defaultValue": ""
     }
     ],
     "metrics": [{
             "entity": "CUSTOM_DEVICE",
-            "statetimeseries": {
-                "key": "state",
-                "states": [
-                  "OK",
-                  "WARNING",
-                  "ERROR"
-                ],
-                "displayname": "Socket status"
-            }
+                "timeseries": {
+                  "key": "cachehit",
+                  "unit": "Avg",
+                  "displayname": "Cache hits"
+                }
         }
     ],
     "ui": {
         "keymetrics": [
             {
-                "key": "state",
+                "key": "cachehit",
                 "displayname": "Socket status",
                 "statemetric": true
             }
         ],
         "charts": [
             {
-                "group": "States",
-                "title": "Socket status",
+                "group": "Varnish",
+                "title": "Cache hits",
                 "series": [
                     {
-                        "key": "state",
-                        "displayname": " ",
+                        "key": "cachehit",
+                        "displayname": "",
                         "seriestype": "bar",
                         "statecolors": ["#008cdb", "#e98e23", "#c41425"],
                         "statechart": true
@@ -67,11 +63,11 @@
         ],
         "keycharts": [
             {
-                "group": "States",
-                "title": "Socket status",
+                "group": "Varnish",
+                "title": "cache hits",
                 "series": [
                     {
-                        "key": "state",
+                        "key": "cachehit",
                         "displayname": " ",
                         "seriestype": "bar",
                         "statecolors": ["#008cdb", "#e98e23", "#c41425"],

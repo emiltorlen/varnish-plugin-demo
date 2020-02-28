@@ -1,0 +1,85 @@
+{
+    "name": "custom.remote.python.varnishcontainerstats",
+    "version": "1.5.1",
+    "type": "python",
+    "entity": "CUSTOM_DEVICE",
+    "metricGroup": "tech.dbts.Events",
+    "processTypeNames": ["PYTHON"],
+    "technologies": ["Varnish"],
+    "favicon": "https://antrecu.com/sites/default/files/2017-02/varnish-logo.png",
+    "source": {
+        "package": "varnishcontainerpluginremote",
+        "className": "VarnishContainerPluginRemote",
+        "activation": "Remote"
+    },
+    "configUI": {
+        "displayName": "Varnish container cache stats",
+        "properties": [
+        {
+            "key": "containerId",
+            "displayName": "Container Id",
+            "displayHint": "something like: d415271fad95"
+        }
+        ]
+    },
+    "properties": [
+    {
+        "key": "containerId",
+        "type": "String",
+        "defaultValue": ""
+    }
+    ],
+    "metrics": [{
+            "entity": "CUSTOM_DEVICE",
+            "statetimeseries": {
+                "key": "state",
+                "states": [
+                  "OK",
+                  "WARNING",
+                  "ERROR"
+                ],
+                "displayname": "Socket status"
+            }
+        }
+    ],
+    "ui": {
+        "keymetrics": [
+            {
+                "key": "state",
+                "displayname": "Socket status",
+                "statemetric": true
+            }
+        ],
+        "charts": [
+            {
+                "group": "States",
+                "title": "Socket status",
+                "series": [
+                    {
+                        "key": "state",
+                        "displayname": " ",
+                        "seriestype": "bar",
+                        "statecolors": ["#008cdb", "#e98e23", "#c41425"],
+                        "statechart": true
+                    }
+                ]
+            }
+        ],
+        "keycharts": [
+            {
+                "group": "States",
+                "title": "Socket status",
+                "series": [
+                    {
+                        "key": "state",
+                        "displayname": " ",
+                        "seriestype": "bar",
+                        "statecolors": ["#008cdb", "#e98e23", "#c41425"],
+                        "statechart": true
+                    }
+                ]
+            }
+        ]
+
+    }
+}

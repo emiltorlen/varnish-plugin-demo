@@ -27,4 +27,4 @@ class VarnishContainerPluginRemote(RemoteBasePlugin):
 		except Exception as e:
 			device.state_metric(key='cachehit', value=0)
 		finally:
-			# s.close()
+            logger.info("Done")

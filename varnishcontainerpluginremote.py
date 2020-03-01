@@ -1,7 +1,9 @@
 from ruxit.api.base_plugin import RemoteBasePlugin
 import logging
 import socket
+import json
 import os
+
 logger = logging.getLogger(__name__)
 class VarnishContainerPluginRemote(RemoteBasePlugin):
 	def initialize(self, **kwargs):
@@ -19,12 +21,14 @@ class VarnishContainerPluginRemote(RemoteBasePlugin):
 		logger.info("Topology: group name=%s, device name=%s", group.name, device.name)
 		# Execute command
 		try:
-			cmd = "docker exec -it " + self.containerId + "  varnishstat -j > out.json"
+			cmd = "docker exec -it " + self.containerId + "  varnishstat -j > /tmp/out.json"
 			os.system(cmd)
-			with open('out.json') as f:
+			with open('/tmp/out.json') as f:
 				data = json.load(f)
-				device.state_metric(key="cachehit",value=data["MAIN.cache_hit"]["value"])
+				device.absolute("cachehit",value=data["MAIN.cache_hit"]["value"])
+				#device.state_metric(key="cachehit",value=data["MAIN.cache_hit"]["value"])
 		except Exception as e:
-			device.state_metric(key='cachehit', value=0)
+			logger.error("Fatal error in main loop", exc_info=True)
+			device.absolute(key='cachehit', value=0)
 		finally:
 			logger.info("Done")

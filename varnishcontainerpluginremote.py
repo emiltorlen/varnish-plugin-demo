@@ -22,9 +22,9 @@ class VarnishContainerPluginRemote(RemoteBasePlugin):
 			cmd = "docker exec -it " + self.containerId + "  varnishstat -j > out.json"
 			os.system(cmd)
 			with open('out.json') as f:
-    			data = json.load(f)
+				data = json.load(f)
 				device.state_metric(key="cachehit",value=data["MAIN.cache_hit"]["value"])
 		except Exception as e:
 			device.state_metric(key='cachehit', value=0)
 		finally:
-            logger.info("Done")
+			logger.info("Done")

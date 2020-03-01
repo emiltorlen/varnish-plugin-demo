@@ -1,6 +1,6 @@
 {
     "name": "custom.remote.python.varnishcontainerstats",
-    "version": "0.1",
+    "version": "0.11",
     "type": "python",
     "entity": "CUSTOM_DEVICE",
     "metricGroup": "tech.dbts.Events",

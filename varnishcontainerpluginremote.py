@@ -28,7 +28,7 @@ class VarnishContainerPluginRemote(RemoteBasePlugin):
         logger.info("Container %s", self.containerId)
         # Execute command
         try:
-            cmd = "docker exec -it " + self.containerId + "  varnishstat -j"
+            cmd = "docker exec " + self.containerId + "  varnishstat -j"
             p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
             stdout, stderr = p.communicate()
             logger.info("Error executing command=%s , err=%s", cmd, stderr)
